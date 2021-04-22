@@ -1,24 +1,23 @@
-const nodeExternals = require('webpack-node-externals');
-const CURRENT_WORKING_DIRECTORY = process.cwd();
 const path = require('path');
+const webpack = require('webpack');
+const CURRENT_WORKING_DIRECTORY = process.cwd();
 const config = {
-    name: 'server',
-    mode: 'development',
+    name: 'browser',
+    mode: 'production',
     devtool: 'eval-source-map',
-    target: "node",
     entry: [
-        path.join(CURRENT_WORKING_DIRECTORY, 'server/server.js')
+        'webpack-hot-middleware/client?reload=true',
+        path.join(CURRENT_WORKING_DIRECTORY, 'client/main.js')
     ],
     output: {
         path: path.join(CURRENT_WORKING_DIRECTORY, '/dist'),
-        filename: 'server.generated.js',
+        filename: 'bundle.js',
         publicPath: '/dist'
     },
-    externals: [nodeExternals()],
     module: {
         rules: [
             {
-                test: /\.js?$/,
+                test: /\.jsx?$/,
                 exclude: /node_modules/,
                 use: ['babel-loader']
             }

@@ -4,7 +4,10 @@
   "description": "MERN Setup",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --config webpack.config.client.js && webpack --mode=development --config webpack.config.server.js",
+    "development": "nodemon",
+    "start": "NODE_ENV=development node ./dist/server.generated.js"
   },
   "author": "Bharath Seshadri",
   "license": "ISC",
