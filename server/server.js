@@ -3,15 +3,28 @@ import devBundle from './devBundle'
 import template from '../template';
 import path from 'path';
 import { MongoClient } from 'mongodb';
+import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
+import compress from 'compression';
+import helmet from 'helmet';
+import cors from 'cors';
+import config from '../config/config';
 
 const app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(compress());
+app.use(helmet());
+app.use(cors());
+
 const CURRENT_WORKING_DIRECTORY = process.cwd();
 devBundle.compile(app);
 app.use('/dist', express.static(path.join(CURRENT_WORKING_DIRECTORY, 'dist')));
 
-const port = process.env.PORT || 3000
 app.get('/', (_req, res) => res.status(200).send(template()));
 
+const { port } = config;
 app.listen(port, (err) => {
     if (err) {
         console.log(err)
