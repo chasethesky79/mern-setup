@@ -9,6 +9,7 @@ import compress from 'compression';
 import helmet from 'helmet';
 import cors from 'cors';
 import config from '../config/config';
+import mongoose from 'mongoose';
 
 const app = express();
 app.use(bodyParser.json());
@@ -17,6 +18,10 @@ app.use(cookieParser());
 app.use(compress());
 app.use(helmet());
 app.use(cors());
+
+mongoose.Promise = global.Promise;
+mongoose.connect(config.mongoUri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true })
+mongoose.connection.on('error', () => { throw new Error(`unable to connect to database: ${mongoUri}`)})
 
 const CURRENT_WORKING_DIRECTORY = process.cwd();
 devBundle.compile(app);
