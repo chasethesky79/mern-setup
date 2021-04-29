@@ -19,4 +19,11 @@ const UserSchema = new mongoose.Schema({
     },
     updated: Date
  });
+
+ UserSchema.virtual('password').set((password) => {
+     this._password = password;
+     this.salt = this.makeSalt();
+     this.hashed_password = this.encryptPassword(password)
+ }).get(() => this._password);
+ 
 export default mongoose.model('User', UserSchema);
