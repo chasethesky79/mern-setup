@@ -17,7 +17,12 @@ const UserSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    updated: Date
+    updated: Date,
+    hashed_password: {
+        type: String,
+        required: 'Password is required'
+    },
+    salt: String
  });
 
  UserSchema.virtual('password').set((password) => {
@@ -38,4 +43,14 @@ const UserSchema = new mongoose.Schema({
      },
      makeSalt: () => Math.round((new Date().valueOf() * Math.random())) + ''
  }
+
+ UserSchema.path('hashed_password').validate(() => {
+   if (this._password && this._password.length < 6) {
+       this.invalidate('password', 'Password must be atleast 6 characters')
+   }
+
+   if (this.isNew && !this._password) {
+    this.invalidate('password', 'Password is required')
+   }
+ }, null)
 export default mongoose.model('User', UserSchema);
