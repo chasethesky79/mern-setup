@@ -10,10 +10,6 @@ const getErrorMessage = (err) => {
                 message = 'Something went wrong'
         }
     } else {
-        for (let errName in err.errors) {
-            if (err.errors[errName].message) {
-                message = err.errors[errName].message;
-            }
-        }
+        message = Object.values(err.errors).find(value => value?.message)?.message
     }
 }
