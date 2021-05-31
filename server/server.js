@@ -1,6 +1,5 @@
 import express from 'express';
 import devBundle from './devBundle'
-import template from '../template';
 import path from 'path';
 import { MongoClient } from 'mongodb';
 import bodyParser from 'body-parser';
@@ -10,6 +9,7 @@ import helmet from 'helmet';
 import cors from 'cors';
 import config from '../config/config';
 import mongoose from 'mongoose';
+import userRoutes from '../server/routes/user.routes';
 
 const app = express();
 app.use(bodyParser.json());
@@ -27,7 +27,7 @@ const CURRENT_WORKING_DIRECTORY = process.cwd();
 devBundle.compile(app);
 app.use('/dist', express.static(path.join(CURRENT_WORKING_DIRECTORY, 'dist')));
 
-app.get('/', (_req, res) => res.status(200).send(template()));
+app.use('/', userRoutes);
 
 const { port } = config;
 app.listen(port, (err) => {
