@@ -29,6 +29,14 @@ app.use('/dist', express.static(path.join(CURRENT_WORKING_DIRECTORY, 'dist')));
 
 app.use('/', userRoutes);
 
+app.use((err, req, res, next) => {
+    if (err.name === 'UnauthorizedError') {
+        res.status(401).json({error: `${err.name} : ${err.message}`})
+    } else if (err) {
+        res.status(400).json({error: `${err.name} : ${err.message}`})
+    }
+})
+
 const { port } = config;
 app.listen(port, (err) => {
     if (err) {
