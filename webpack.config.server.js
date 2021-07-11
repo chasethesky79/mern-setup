@@ -3,8 +3,6 @@ const CURRENT_WORKING_DIRECTORY = process.cwd();
 const path = require('path');
 const config = {
     name: 'server',
-    mode: 'development',
-    devtool: 'eval-source-map',
     target: "node",
     entry: [
         path.join(CURRENT_WORKING_DIRECTORY, 'server/server.js')
@@ -21,6 +19,10 @@ const config = {
                 test: /\.js?$/,
                 exclude: /node_modules/,
                 use: ['babel-loader']
+            },
+            {
+                test: /\.(ttf|eot|svg|gif|jpg|png)(\?[\s\S]+)?$/,
+                use: 'file-loader'
             }
         ]
     }

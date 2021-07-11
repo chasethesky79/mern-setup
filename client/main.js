@@ -1,6 +1,5 @@
 import React from 'react';
-import HelloWorld from './HelloWorld';
+import App from './App';
+import { render } from 'react-router-dom';
 
-const { render } = require("react-dom");
-
-render(<HelloWorld/>, document.getElementById('root'))
+render(<App/>, document.getElementById('root'))

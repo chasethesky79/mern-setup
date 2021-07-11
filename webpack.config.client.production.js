@@ -6,8 +6,7 @@ const config = {
     mode: 'production',
     devtool: 'eval-source-map',
     entry: [
-        'webpack-hot-middleware/client?reload=true',
-        path.join(CURRENT_WORKING_DIRECTORY, 'client/main.js')
+        'webpack-hot-middleware/client?reload=true'
     ],
     output: {
         path: path.join(CURRENT_WORKING_DIRECTORY, '/dist'),
@@ -20,6 +19,10 @@ const config = {
                 test: /\.jsx?$/,
                 exclude: /node_modules/,
                 use: ['babel-loader']
+            },
+            {
+                test: /\.(ttf|eof|svg|gif|jpg|png) (\?[\s\S]+)?$/,
+                use: 'file-loader'
             }
         ]
     }
