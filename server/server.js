@@ -10,6 +10,8 @@ import cors from 'cors';
 import config from '../config/config';
 import mongoose from 'mongoose';
 import userRoutes from '../server/routes/user.routes';
+import authRoutes from '../server/routes/auth.routes';
+import template from '../template';
 
 const app = express();
 app.use(bodyParser.json());
@@ -28,6 +30,11 @@ devBundle.compile(app);
 app.use('/dist', express.static(path.join(CURRENT_WORKING_DIRECTORY, 'dist')));
 
 app.use('/', userRoutes);
+app.use('/', authRoutes);
+
+app.get('/', (req, res) => {
+    res.status(200).send(template())
+})
 
 app.use((err, req, res, next) => {
     if (err.name === 'UnauthorizedError') {

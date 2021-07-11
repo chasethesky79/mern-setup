@@ -1,18 +1,19 @@
 import jwt from 'jsonwebtoken';
 import config from '../../config/config';
 import expressJwt from 'express-jwt';
+import User from '../models/user.model';
 
 const signIn = async (req, res) => {
-    const { body: { email, password } } = req;
+    const { body } = req;
     try {
-        const user = await User.findOne({ email, password });
+        const user = await User.findOne({ "email": body.email });
         const { _id, name, email } = user;
         if (!user) {
             return res.status(401).json({
                 error: 'User not found'
             });
         }
-        if (!user.authenticate(password)) {
+        if (!user.authenticate(body.password)) {
             return res.status(401).json({
                 error: 'Email and password do not match'
             });
@@ -28,6 +29,7 @@ const signIn = async (req, res) => {
             }
         })
     } catch (err) {
+        console.log(`ERROR ${JSON.stringify(err)}`);
         return res.status(401).json({ error: 'Could not sign in'})
     }
 }
