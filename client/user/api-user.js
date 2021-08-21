@@ -49,7 +49,7 @@ const update = async (params, credentials, user) => {
     const { userId } = params;
     try {
         const response = await fetch(`/api/users/${userId}`, {
-            method: 'POST',
+            method: 'PUT',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
@@ -62,3 +62,23 @@ const update = async (params, credentials, user) => {
         console.log(err)
     }
 }
+
+const remove = async (params, credentials, user) => {
+    const { userId } = params;
+    try {
+        const response = await fetch(`/api/users/${userId}`, {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${credentials.t}`
+            },
+            body: JSON.stringify(user)
+        })
+        return response.json()
+    } catch(err) {
+        console.log(err)
+    }
+}
+
+export default { create, list, read, update, remove };
