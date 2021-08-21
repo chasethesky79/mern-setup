@@ -44,3 +44,21 @@ const read = async (params, credentials, signal) => {
         console.log(err)
     }
 }
+
+const update = async (params, credentials, user) => {
+    const { userId } = params;
+    try {
+        const response = await fetch(`/api/users/${userId}`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${credentials.t}`
+            },
+            body: JSON.stringify(user)
+        })
+        return response.json()
+    } catch(err) {
+        console.log(err)
+    }
+}
