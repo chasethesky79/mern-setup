@@ -24,3 +24,5 @@ const signOut = async () => {
         console.log(err)
     }
 }
+
+export default { signIn, signOut }
