@@ -21,3 +21,5 @@ const clearJWT = (cb) => {
     cb();
     signOut().then(data => document.cookie = 't=; expires=Thu, 01 jAN 1970 00:00:00 UTC; path=/');
 }
+
+export default { authenticate, isAuthenticated, clearJWT }
